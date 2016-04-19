@@ -46,13 +46,6 @@ typedef struct {
 
 }timeDate;
 
-//std::time_t t = std::time(NULL);
-
-
-
-//date = std::asctime(std::localtime(&t));
-
-//date.erase(date.size() - 1);
 
 /**
  * SPI is a abstract base class that defines the functionality of SPI.
@@ -94,7 +87,7 @@ protected:
     void setSpiRdMode(uint8_t spiRdMode){m_spiParams.spiRdMode = spiRdMode;}
     void setSpiMode(uint8_t spiMode){m_spiParams.spiRdMode = spiMode;}
     void setSpiBPW(uint8_t spiBPW){m_spiParams.spiBPW = spiBPW;}
-    void setSpiMaxSpeed(uint32_t){m_spiParams.spiMaxSpeed;}
+    void setSpiMaxSpeed(uint32_t maxSpeed){m_spiParams.spiMaxSpeed = maxSpeed;}
 
     void currentTimeDate();
 
@@ -106,7 +99,6 @@ protected:
  protected:
     SystemLog*    m_mySPISysLog;
     Logger*		  m_pMyLogger;
-    //timeDate      m_MyTimeDate;
     std::string	  m_dateTime;
 
 

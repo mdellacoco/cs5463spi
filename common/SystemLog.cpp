@@ -34,8 +34,6 @@ int SystemLog::writeErrLog(const char *msg) {
 	pErrmsg = strerror(errno);
 	int size = asprintf(&pstrMsg, "%s %s", msg, pErrmsg);
 
-	printf("Can't send spi message: %s/n", pErrmsg);
-
 	if(pstrMsg && size){   //if there is a valid message
 	  openlog(m_pDeamon,LOG_PID, LOG_LOCAL7);
 	  syslog(LOG_ERR, "%s", pstrMsg);

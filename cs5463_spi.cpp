@@ -2,7 +2,7 @@
  * cs5463_spi.cpp
  *
  *  Created on: Jun 23, 2014
- *      Author: victoria
+ *      Author: Margarita E. Della Sera
  */
 
 #include "cs5463_spi.h"
@@ -14,32 +14,31 @@
  */
 
 cs5463spi::cs5463spi(){
-	m_statusWarn.push_back("invalid command");
-	m_statusWarn.push_back("epsilon updated");
-	m_statusWarn.push_back("low supply detect");
-	m_statusWarn.push_back("modulator oscillation detected on voltage");
-	m_statusWarn.push_back("modulation oscillation detected on current channel");
-	m_statusWarn.push_back("");
-	m_statusWarn.push_back("modulator oscillation detected on temperature channel");
-	m_statusWarn.push_back("temperature updated");
-	m_statusWarn.push_back("");
-	m_statusWarn.push_back("");
-	m_statusWarn.push_back("voltage sag occurred (VSAG)");
-	m_statusWarn.push_back("current fault occurred (IFAULT)");
-	m_statusWarn.push_back("energy out of range (EOR)");
+	m_statusWarn.push_back("Invalid command.");
+	m_statusWarn.push_back("Epsilon updated.");
+	m_statusWarn.push_back("Low supply detected.");
+	m_statusWarn.push_back("Modulator oscillation detected on voltage.");
+	m_statusWarn.push_back("Modulation oscillation detected on current channel.");
+	m_statusWarn.push_back("n/a");
+	m_statusWarn.push_back("Modulator oscillation detected on temperature channel.");
+	m_statusWarn.push_back("Temperature updated.");
+	m_statusWarn.push_back("n/a");
+	m_statusWarn.push_back("n/a");
+	m_statusWarn.push_back("Voltage sag occurred (VSAG).");
+	m_statusWarn.push_back("Current fault occurred (IFAULT).");
+	m_statusWarn.push_back("Energy out of range (EOR).");
 	m_statusWarn.push_back("Vrms out of range (VROR)");
 	m_statusWarn.push_back("Irms out of range (IROR)");
-	m_statusWarn.push_back("");
-	m_statusWarn.push_back("voltage out of range (VOR)");
-	m_statusWarn.push_back("current out of range (IOR)");
-	m_statusWarn.push_back("");
-	m_statusWarn.push_back("");
-	m_statusWarn.push_back("convertion ready (CRDY)");
-	m_statusWarn.push_back("");
-	m_statusWarn.push_back("");
-	m_statusWarn.push_back("data ready (DRDY)");
-	//m_test[0] = "a";
-	//m_test[1] = "b";
+	m_statusWarn.push_back("n/a");
+	m_statusWarn.push_back("Voltage out of range (VOR).");
+	m_statusWarn.push_back("Current out of range (IOR).");
+	m_statusWarn.push_back("n/a");
+	m_statusWarn.push_back("n/a");
+	m_statusWarn.push_back("Convertion ready (CRDY).");
+	m_statusWarn.push_back("n/a");
+	m_statusWarn.push_back("n/a");
+	m_statusWarn.push_back("Data ready (DRDY).");
+
 }
 
  /**
@@ -72,7 +71,8 @@ void cs5463spi::SerialPortInit() {
 	sendCmd(m_cmds.SYNC_1);
 
 	//start convertion
-	StartConvertion(m_cmds.CONT_CONV);
+	sendCmd(m_cmds.CONT_CONV);
+	//StartConvertion(m_cmds.CONT_CONV);
 
 }
 
@@ -117,10 +117,10 @@ void cs5463spi::SwReset()
 
 //------------------------------- Start conversion
 
-void cs5463spi::StartConvertion(uint8_t startCmd)
-{
-	sendCmd(startCmd);
-}
+//void cs5463spi::StartConvertion(uint8_t startCmd)
+//{
+//	sendCmd(startCmd);
+//}
 
 
 /**
@@ -157,9 +157,10 @@ int cs5463spi::WriteRegister(uint8_t cmd, uint8_t highByte,
 
 int cs5463spi::ReadRegister(uint8_t cmd, uint8_t* pRxed)
 {
-	uint8_t txBuf[4];//, rxBuf[4];
+	uint8_t txBuf[4];
 
 	int txLength = sizeof(txBuf);
+	int res = -1;
 
 	memset(txBuf, 0xFF, txLength);
 	memset(pRxed, 0x00, txLength);
@@ -167,17 +168,9 @@ int cs5463spi::ReadRegister(uint8_t cmd, uint8_t* pRxed)
 	txBuf[0] = cmd;  //register address
 	printf("Bytes to Tx: 0x%x  0x%x  0x%x  0x%x\n\n", *(txBuf+0), *(txBuf+1), *(txBuf+2), *(txBuf+3));
 
-	int i = spiSendReceive(txBuf, txLength, pRxed, txLength);
-	//*pData = rxBuf[0];
-	//pData = rxBuf;
-	//*pRxed = rxBuf;
+	res = spi::spiSendReceive(txBuf, txLength, pRxed, txLength);
 
-	//printf("Bytes Rxed: 0x%x  0x%x  0x%x  0x%x\n\n", rxBuf[0], rxBuf[1], rxBuf[2], rxBuf[3]);
-	printf("Bytes Rxed: 0x%x  0x%x  0x%x  0x%x\n\n", *(pRxed+0), *(pRxed+1), *(pRxed+2), *(pRxed+3));
-
-	return i;
-
-
+	return res;
 }
 
 /**
@@ -188,17 +181,13 @@ int cs5463spi::ReadRegister(uint8_t cmd, uint8_t* pRxed)
 void cs5463spi::sendCmd(uint8_t cmd)
 {
 	uint8_t txCmd;
-	uint8_t rxCmd;
+	uint8_t* rxCmd = 0;
 	int txCmdLength = 1;
 	int status = -1;
 
 	txCmd = cmd;
-	rxCmd = 0x00;
 
-	status  = spiSendReceive(&txCmd, txCmdLength, &rxCmd, txCmdLength);
-
-	if(status < 0)
-		m_mySPISysLog->writeErrLog("Send Command failed.");
+	status  = spi::spiSendReceive(&txCmd, txCmdLength, rxCmd, txCmdLength);
 
 }
 
@@ -296,8 +285,6 @@ void cs5463spi::CheckStatus(uint8_t* status) {
    int count = 0;
    uint8_t result = 0;
 
-   printf("Status: 0x%x, 0x%x, 0x%x, 0x%x \n\n", *(status+0), *(status+1), *(status+2), *(status+3));
-
    for(int y = 3; y >= 1; y--){
 
 	  uint8_t a = 0x01;
@@ -313,8 +300,10 @@ void cs5463spi::CheckStatus(uint8_t* status) {
              result = value & (a << i);
 
 		     if(result) {
-			    m_mySPISysLog->writeErrLog(m_statusWarn[i].c_str());
-			    printf("Warning is: %s\n", m_statusWarn[i].c_str());
+		    	 std::string msg;
+		    	 msg = "Status: " + m_statusWarn[i];
+		    	 m_mySPISysLog->writeMsgLog(msg.c_str());
+			     printf("%s\n", msg.c_str());
 		    }
 	      }
 	      count++;
@@ -325,7 +314,7 @@ void cs5463spi::CheckStatus(uint8_t* status) {
 
 /**
  * void CheckStatusReady(uint8_t* byte, int bit);
- *
+ * check data ready and convertion ready
  **/
 
 bool cs5463spi::CheckStatusReady(uint8_t byte, int bit){
@@ -363,10 +352,10 @@ void cs5463spi::Run() {
 	SerialPortInit();
 
 	// init interrupt handler
-//	bool intInitSuccess = InterruptHandlerInit(false);
+	bool intInitSuccess = InterruptHandlerInit(false);
 
 	//interrupt handler
-//	InterruptHandler();
+	InterruptHandler();
 
 	while(1){
 
@@ -375,25 +364,23 @@ void cs5463spi::Run() {
 
 	 status = ReadRegister(m_regReadCmd.TEMP, rx1);
 
-	 //CheckStatus(rx1);
+	 CheckStatus(rx1);
 
 	 //check data ready
-	// if(CheckStatusReady(rx1[1], drdy))
-	//	 printf("status: %s\n\n",  m_statusWarn[drdy].c_str());
+	 if(CheckStatusReady(rx1[1], drdy))
+		printf("status: %s\n\n",  m_statusWarn[drdy].c_str());
 
 	 // check convertion ready
-	// if(CheckStatusReady(rx1[1], crdy))
-	 	//	 printf("status: %s\n\n",  m_statusWarn[crdy].c_str());
+	 if(CheckStatusReady(rx1[1], crdy))
+	 	printf("status: %s\n\n",  m_statusWarn[crdy].c_str());
 
 	 //check temperature updated
-	// if(CheckStatusReady(rx1[3], tup))
-		// printf("status: %s\n\n",  m_statusWarn[tup].c_str());
+	 if(CheckStatusReady(rx1[3], tup))
+		 printf("status: %s\n\n",  m_statusWarn[tup].c_str());
 
-	// if(!CheckStatusReady(rx1[3], ic_not))
-	 	 //		 printf("status: %s\n\n",  m_statusWarn[ic_not].c_str());
+	 if(!CheckStatusReady(rx1[3], ic_not))
+	 	 printf("status: %s\n\n",  m_statusWarn[ic_not].c_str());
 
-	// asprintf(&strAcc, "%s: 0.5 0.60 0.60 0.36 %d %d %d %d 1.0 0.000082 0.36 0.0000086 0.00051\n",
-		//	 m_pMyTimeDate->date.c_str(), rx1[0], rx1[1], rx1[2], rx1[3]);
 	 asprintf(&strAcc, "%sT 0.5 0.60 0.60 0.36 %d %d %d %d 1.0 0.000082 0.36 0.0000086 0.00051",
 			 m_dateTime.c_str(), rx1[0], rx1[1], rx1[2], rx1[3]);
 
@@ -403,7 +390,7 @@ void cs5463spi::Run() {
 	 m_pMyLogger->WriteReadRemote(strAcc);
 
 	  free(strAcc);
-	  sleep(2);
+	  sleep(5);
 	 }
 
 }
@@ -415,52 +402,6 @@ uint32_t cs5463spi::make32(uint8_t var1, uint8_t var2, uint8_t var3, uint8_t var
 }
 
 
-
-/**
- * REad register value. This is an overridden function.
- */
-/*
-uint32_t cs5463spi::ReadMyValues()
-{
-   //uint8_t value = 0;
-   uint32_t value = 0; //= 0;
-
-
-
- //  sendCmd(m_cmds.CONT_CONV);
-
-   //read status
-   WriteRegister(m_regAddPg0.CONF,0x01, 0x00,0x00);
-   ReadRegister(m_regAddPg0.CONF, &value);
-
-//   sendCmd(m_cmds.PW_UP_HALT);
- //  sleep(10);
-
-
-
-  // ReadRegister(m_regAddPg0.TEMP, &value);//// 0x1E
-   //ReadRegister(m_regAddPg0.CONF, &value);//// 0x1E
-
-  // std::stringstream stream;
-  // stream << std::dec << value;
-  // std::string result (stream.str());
-
-   //printf("Result is: %s\n", result.c_str());
-
-   	// readVal = make32(0x00, 0x15, 0x45, 0x80);
- //  	readVal = make32(*(value++), *(value++), *(value++), *value);
-   	// printf("The 32 bit val is: %d\n", readVal);
-
-   	 //uint32_t myVal = 0x0014BA80;
-   	// myVal = myVal/(pow(2, 16));
-
-   	 //printf("This val is: %d\n", result);
-
-   	 return value;
-
-
-}
-*/
 
 
 

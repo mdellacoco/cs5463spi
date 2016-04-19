@@ -19,8 +19,6 @@ spi::spi()//
 	m_spiParams.spiRdMode = 0;
 	m_spiParams.spiSpeed = 0;
 
-	//m_pMyTimeDate->date = "";
-	//m_pMyTimeDate->time = 0;
 }
 
 /**
@@ -32,9 +30,8 @@ spi::~spi() {
 }
 
 void spi::openDevice(const char *pDevice){
-	printf("I am about to open file ..\n");
 	m_spiParams.fd = open(pDevice, O_RDWR);
-	printf("fd: %i\n", m_spiParams.fd);
+
 }
 
 /** spiSendReceive has two functionalities sends|/writes to the SPI and send/receive
@@ -50,13 +47,12 @@ int spi::spiSendReceive(uint8_t *pTxBuf, int iTxLen, uint8_t *pRxBuf, int iRxLen
 	xfer.tx_buf = (unsigned long)pTxBuf;
 	xfer.rx_buf = (unsigned long)pRxBuf;
 	xfer.len = iTxLen;
-	xfer.delay_usecs = m_spiParams.spiDelay;
 	xfer.speed_hz = m_spiParams.spiSpeed;
+	xfer.delay_usecs = m_spiParams.spiDelay;
 	xfer.bits_per_word = m_spiParams.spiBPW;
 
 	currentTimeDate();
 	status = ioctl(m_spiParams.fd, SPI_IOC_MESSAGE(1), &xfer);
-
 
 	if(status < 0) {
 		m_mySPISysLog->writeErrLog("Can't send SPI message:");
@@ -148,10 +144,6 @@ void spi::spiInitBitOrder() {
 
 void spi::currentTimeDate() {
 
-	//m_MyTimeDate.time = std::time(NULL);
-	//m_MyTimeDate.date = std::asctime(std::localtime(&m_MyTimeDate.time));
-	//m_MyTimeDate.date.erase(m_MyTimeDate.date.size() - 1);
-	//time_t rawTime;
 	struct tm* timeInfo;
 	char buffer [80];
 
@@ -159,8 +151,5 @@ void spi::currentTimeDate() {
 	timeInfo = std::localtime(&rawTime);
 	strftime (buffer, 80, "%F %T", timeInfo);
 	m_dateTime = buffer;
-
-
-
 }
 

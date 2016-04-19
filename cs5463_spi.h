@@ -8,13 +8,13 @@
 #ifndef CS5463_SPI_H_
 #define CS5463_SPI_H_
 
-#include "spi.h"
+
 #include <sstream>
 #include <stdint.h>
 #include <math.h>
 #include <vector>
 #include <string>
-
+#include "spi.h"
 using namespace std;
 
 /**
@@ -122,7 +122,7 @@ private:
 			           uint8_t midByte, uint8_t lowByte);
 	int ReadRegister(uint8_t cmd, uint8_t* pRxed);
 	void sendCmd(uint8_t cmd);
-	void StartConvertion(uint8_t startCmd);
+	//void StartConvertion(uint8_t startCmd);
 	void setPage(uint8_t pg);
 	void SwReset();
 	void PowerDown(uint8_t pwCmd);
@@ -151,12 +151,10 @@ private:
 	cs5463spiParams	   		m_spiParams;
 
 	std::vector<std::string> m_statusWarn;
-	//string m_test[23];// = {"a", "b"};
 
 	enum {ic_not, fup, lsd, iod, vod,tod=6, tup,
 		vsag=10, ifault, eor, vror, iror, vor=16,
 		ior, crdy=20, drdy=23};
-
 
 
 	uint8_t  m_rxBuf[2];

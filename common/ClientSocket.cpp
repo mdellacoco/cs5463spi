@@ -5,7 +5,7 @@
  *      Author: victoria
  */
 
-#include <ClientSocket.h>
+#include "ClientSocket.h"
 
 
 ClientSocket* ClientSocket::m_clientSocketInstance = NULL;
@@ -54,12 +54,10 @@ int ClientSocket::createAndConnect() {
 	   perror("getaddrinfo");
 	}
 	//NB handle error
-	printf("Servername: %s\n", m_clientSocketInstance->m_servername.c_str());
-	for (rp = result; rp != NULL; rp = rp->ai_next) {
-         printf("I am here\n");
-         m_clientSocketInstance->m_sfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
 
-		printf("sfd is %i\n", m_clientSocketInstance->m_sfd);
+	for (rp = result; rp != NULL; rp = rp->ai_next) {
+
+        m_clientSocketInstance->m_sfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
 
 	    if (m_clientSocketInstance->m_sfd == -1)
 	    	continue;
