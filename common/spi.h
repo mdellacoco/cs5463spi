@@ -21,6 +21,7 @@
 #include <string.h>
 #include <syslog.h>
 #include <ctime>
+#include <time.h>
 
 #include "SystemLog.h"
 #include "Logger.h"
@@ -63,9 +64,10 @@ public:
 	virtual void SerialPortInit(){}
 	virtual void ReadValues(){}
 	virtual void Run(){}
+	virtual void Calibrate(int calType){}
 
 	//Set variables
-	void openDevice(const char *pDevice);
+	int openDevice(const char *pDevice);
 
 	void setSpiSpeed(uint32_t spiSpeed){m_spiParams.spiSpeed = spiSpeed;}
 	void setSpiDelay(uint16_t spiDelay){m_spiParams.spiDelay = spiDelay;}
@@ -76,6 +78,7 @@ public:
 	//Logger* getLogger(){return m_pMyLogger;}
 
 	virtual void spiInit();
+	virtual void Exit(int exitType, const char *msg);
 
 
 protected:
@@ -91,6 +94,12 @@ protected:
 
     void currentTimeDate();
 
+    long ElapsedTime(struct timespec startTime);
+
+    struct timespec CurrentTime();
+
+
+
  private:
     void spiAbort(const char *msg);
     spi(const spi&) = delete; //private non-implemented copy constructor
@@ -100,6 +109,8 @@ protected:
     SystemLog*    m_mySPISysLog;
     Logger*		  m_pMyLogger;
     std::string	  m_dateTime;
+
+    struct timespec time;
 
 
  private:

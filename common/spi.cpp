@@ -29,8 +29,17 @@ spi::~spi() {
 	close(m_spiParams.fd);
 }
 
-void spi::openDevice(const char *pDevice){
+int spi::openDevice(const char *pDevice){
+
 	m_spiParams.fd = open(pDevice, O_RDWR);
+
+	if(m_spiParams.fd == -1) {
+		printf("\n open() failed with error [%s]\n",strerror(errno));
+		return -1;
+	}
+	else
+		return m_spiParams.fd;
+
 
 }
 
@@ -40,7 +49,7 @@ void spi::openDevice(const char *pDevice){
  */
 
 int spi::spiSendReceive(uint8_t *pTxBuf, int iTxLen, uint8_t *pRxBuf, int iRxLen){
-    int status = -1;
+    int status;
 	struct spi_ioc_transfer xfer;
 	memset(&xfer, 0, sizeof(xfer));
 
@@ -55,9 +64,19 @@ int spi::spiSendReceive(uint8_t *pTxBuf, int iTxLen, uint8_t *pRxBuf, int iRxLen
 	status = ioctl(m_spiParams.fd, SPI_IOC_MESSAGE(1), &xfer);
 
 	if(status < 0) {
-		m_mySPISysLog->writeErrLog("Can't send SPI message:");
+
+		std::string msg;
+		int errorNum;
+
+		errorNum = errno;
+
+		std::string errDescription(strerror(errorNum));
+
+		msg = "Can't send SPI message: " + errDescription;
+		//m_mySPISysLog->writeErrLog("Can't send SPI message:");
 		//m_pMyLogger->WriteLocal();
-		return status;
+	    Exit(EXIT_FAILURE, msg.c_str());
+		//return status;
 	}
 
 	return status;
@@ -153,3 +172,43 @@ void spi::currentTimeDate() {
 	m_dateTime = buffer;
 }
 
+/**
+ *
+ * ElapsedTime - works out the time passed/elapsed from a starting time.
+ */
+
+long spi::ElapsedTime(struct timespec startTime){
+ struct timespec nowTime;
+ clock_gettime(CLOCK_REALTIME, &nowTime);
+ long elapsedTime = (nowTime.tv_sec - startTime.tv_sec)*1E9 +
+		             (nowTime.tv_nsec - startTime.tv_nsec);
+
+ return elapsedTime;
+
+}
+
+/**
+ *
+ * TimeStart - gets the current time.
+ */
+struct timespec spi::CurrentTime(){
+	struct timespec timeStart;
+	clock_gettime(CLOCK_REALTIME, &timeStart);
+	return timeStart;
+}
+
+/**
+ * Exit() .. terminates the application gracefully due to either abnormal termination or
+ * intended termination.
+ */
+void spi::Exit(int exitType, const char *msg){
+//TODO: do a time read to know when the program terminated. or even write the date too ..
+	if(EXIT_FAILURE)
+	   m_mySPISysLog->writeErrLog(msg);
+
+	if(EXIT_SUCCESS)
+		m_mySPISysLog->writeMsgLog(msg);
+
+
+	 exit(exitType);
+}
