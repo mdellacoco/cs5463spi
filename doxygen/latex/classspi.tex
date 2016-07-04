@@ -1,0 +1,173 @@
+\hypertarget{classspi}{\section{spi Class Reference}
+\label{classspi}\index{spi@{spi}}
+}
+
+
+{\ttfamily \#include $<$spi.\-h$>$}
+
+Inheritance diagram for spi\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classspi}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \hyperlink{classspi_aa7039ccea879c1194360b401427f7b93}{$\sim$spi} ()
+\item 
+\hypertarget{classspi_a34b00f5bd260681619fee418239048a0}{virtual void {\bfseries Serial\-Port\-Init} ()}\label{classspi_a34b00f5bd260681619fee418239048a0}
+
+\item 
+\hypertarget{classspi_a94309b811b02a030d1a37eca9e27b286}{virtual void {\bfseries Read\-Values} ()}\label{classspi_a94309b811b02a030d1a37eca9e27b286}
+
+\item 
+\hypertarget{classspi_ab4c9b1d0f205e9dfac00107bc8fe1729}{virtual void {\bfseries Run} ()}\label{classspi_ab4c9b1d0f205e9dfac00107bc8fe1729}
+
+\item 
+\hypertarget{classspi_a1676554345a6127503f10d117f5b242d}{virtual bool {\bfseries Calibrate} (int cal\-Type)}\label{classspi_a1676554345a6127503f10d117f5b242d}
+
+\item 
+\hypertarget{classspi_ab5338399676761d03e503fa8f55ff4f6}{int {\bfseries open\-Device} (const char $\ast$p\-Device)}\label{classspi_ab5338399676761d03e503fa8f55ff4f6}
+
+\item 
+\hypertarget{classspi_af0e4702c999e07c9d2655cae8d12d1a4}{void {\bfseries set\-Spi\-Speed} (uint32\-\_\-t spi\-Speed)}\label{classspi_af0e4702c999e07c9d2655cae8d12d1a4}
+
+\item 
+\hypertarget{classspi_a24d0af0b21a8f58127d18c7cf77f0fd2}{void {\bfseries set\-Spi\-Delay} (uint16\-\_\-t spi\-Delay)}\label{classspi_a24d0af0b21a8f58127d18c7cf77f0fd2}
+
+\item 
+\hypertarget{classspi_aa81694fe53868e64ad9ef35e9003ac96}{void {\bfseries set\-Bit\-Order} (uint8\-\_\-t bit\-Order)}\label{classspi_aa81694fe53868e64ad9ef35e9003ac96}
+
+\item 
+\hypertarget{classspi_aa1251c2275e3a868291c85106de2f44b}{void {\bfseries set\-Log} (\hyperlink{classSystemLog}{System\-Log} $\ast$pspi\-Sys\-Log)}\label{classspi_aa1251c2275e3a868291c85106de2f44b}
+
+\item 
+\hypertarget{classspi_a868d26f2805f7a0a5ab2b45fef847a3d}{void {\bfseries set\-Logger} (\hyperlink{classLogger}{Logger} $\ast$my\-Logger)}\label{classspi_a868d26f2805f7a0a5ab2b45fef847a3d}
+
+\item 
+virtual void \hyperlink{classspi_af6b5a441ef9014df209fa3803d0fa68f}{spi\-Init} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspi_a01ec3f79a14b29cee3fed591c477ecc4}{virtual void {\bfseries Write\-Register} ()}\label{classspi_a01ec3f79a14b29cee3fed591c477ecc4}
+
+\item 
+\hypertarget{classspi_ab82db7e47c0788f8593c0213688043cd}{virtual int {\bfseries Read\-Register} ()}\label{classspi_ab82db7e47c0788f8593c0213688043cd}
+
+\item 
+int \hyperlink{classspi_ace5d4b909ab9a103ae676df30db26836}{spi\-Send\-Receive} (uint8\-\_\-t $\ast$p\-Tx\-Buf, int i\-Tx\-Len, uint8\-\_\-t $\ast$p\-Rx\-Buf, int i\-Rx\-Len)
+\item 
+void \hyperlink{classspi_ab1569afd18aaa3ecaacc5252dab1177c}{spi\-Init\-Bit\-Order} ()
+\item 
+\hypertarget{classspi_a911578bfdd06fb5a4572069213072e53}{void {\bfseries set\-Spi\-Wr\-Mode} (uint8\-\_\-t spi\-Wr\-Mode)}\label{classspi_a911578bfdd06fb5a4572069213072e53}
+
+\item 
+\hypertarget{classspi_aea783dd071bb43a6cd05bc9cf4acb0d4}{void {\bfseries set\-Spi\-Rd\-Mode} (uint8\-\_\-t spi\-Rd\-Mode)}\label{classspi_aea783dd071bb43a6cd05bc9cf4acb0d4}
+
+\item 
+\hypertarget{classspi_aeb466902f0246e674230656c36260417}{void {\bfseries set\-Spi\-Mode} (uint8\-\_\-t spi\-Mode)}\label{classspi_aeb466902f0246e674230656c36260417}
+
+\item 
+\hypertarget{classspi_a0ca79e4dfeb0520519aae82576881229}{void {\bfseries set\-Spi\-B\-P\-W} (uint8\-\_\-t spi\-B\-P\-W)}\label{classspi_a0ca79e4dfeb0520519aae82576881229}
+
+\item 
+\hypertarget{classspi_a00c5efd63b774a1d50d3e69c8a49e0fa}{void {\bfseries set\-Spi\-Max\-Speed} (uint32\-\_\-t max\-Speed)}\label{classspi_a00c5efd63b774a1d50d3e69c8a49e0fa}
+
+\item 
+void \hyperlink{classspi_a71d243d92efaea106a3ee14970ea5ebe}{current\-Time\-Date} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspi_a30e62f162a7381cb154ceba749c3f9ba}{\hyperlink{classSystemLog}{System\-Log} $\ast$ {\bfseries m\-\_\-my\-S\-P\-I\-Sys\-Log}}\label{classspi_a30e62f162a7381cb154ceba749c3f9ba}
+
+\item 
+\hypertarget{classspi_a6b36076244edf6f661198f69c6b89b2d}{\hyperlink{classLogger}{Logger} $\ast$ {\bfseries m\-\_\-p\-My\-Logger}}\label{classspi_a6b36076244edf6f661198f69c6b89b2d}
+
+\item 
+\hypertarget{classspi_aa584b9b3ec842ac93204341966469d4c}{std\-::string {\bfseries m\-\_\-date\-Time}}\label{classspi_aa584b9b3ec842ac93204341966469d4c}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classspi_a7a176c5e112e2de900a823756d07af9d}{spi\-Abort} (const char $\ast$msg)
+\item 
+\hypertarget{classspi_a6855e6d729c1b70a51323596503b43a7}{{\bfseries spi} (const \hyperlink{classspi}{spi} \&)=delete}\label{classspi_a6855e6d729c1b70a51323596503b43a7}
+
+\item 
+\hypertarget{classspi_af6266e8c219e5b5ef4be205239379f14}{const \hyperlink{classspi}{spi} \& {\bfseries operator=} (const \hyperlink{classspi}{spi} \&)=delete}\label{classspi_af6266e8c219e5b5ef4be205239379f14}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspi_afa6f0cf71472956e1b063b60421d6eeb}{\hyperlink{structspiParams}{spi\-Params} {\bfseries m\-\_\-spi\-Params}}\label{classspi_afa6f0cf71472956e1b063b60421d6eeb}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+S\-P\-I is a abstract base class that defines the functionality of S\-P\-I. the clas is an S\-P\-I and has a Sys log member to write messages ang error to the linux sys log utility. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classspi_aa7039ccea879c1194360b401427f7b93}{\index{spi@{spi}!$\sim$spi@{$\sim$spi}}
+\index{$\sim$spi@{$\sim$spi}!spi@{spi}}
+\subsubsection[{$\sim$spi}]{\setlength{\rightskip}{0pt plus 5cm}spi\-::$\sim$spi (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspi_aa7039ccea879c1194360b401427f7b93}
+Virtual destructor 
+
+\subsection{Member Function Documentation}
+\hypertarget{classspi_a71d243d92efaea106a3ee14970ea5ebe}{\index{spi@{spi}!current\-Time\-Date@{current\-Time\-Date}}
+\index{current\-Time\-Date@{current\-Time\-Date}!spi@{spi}}
+\subsubsection[{current\-Time\-Date}]{\setlength{\rightskip}{0pt plus 5cm}void spi\-::current\-Time\-Date (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspi_a71d243d92efaea106a3ee14970ea5ebe}
+void Current\-Time\-Date() Works out the current date and time when sensor data was read. \hypertarget{classspi_a7a176c5e112e2de900a823756d07af9d}{\index{spi@{spi}!spi\-Abort@{spi\-Abort}}
+\index{spi\-Abort@{spi\-Abort}!spi@{spi}}
+\subsubsection[{spi\-Abort}]{\setlength{\rightskip}{0pt plus 5cm}void spi\-::spi\-Abort (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classspi_a7a176c5e112e2de900a823756d07af9d}
+Abort the application, but before it writes to the system log as an error. \hypertarget{classspi_af6b5a441ef9014df209fa3803d0fa68f}{\index{spi@{spi}!spi\-Init@{spi\-Init}}
+\index{spi\-Init@{spi\-Init}!spi@{spi}}
+\subsubsection[{spi\-Init}]{\setlength{\rightskip}{0pt plus 5cm}void spi\-::spi\-Init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspi_af6b5a441ef9014df209fa3803d0fa68f}
+Initializes the spi driver 
+
+Reimplemented in \hyperlink{classcs5463spi_ab61f5c633635597575dd756dd26391f3}{cs5463spi}.
+
+\hypertarget{classspi_ab1569afd18aaa3ecaacc5252dab1177c}{\index{spi@{spi}!spi\-Init\-Bit\-Order@{spi\-Init\-Bit\-Order}}
+\index{spi\-Init\-Bit\-Order@{spi\-Init\-Bit\-Order}!spi@{spi}}
+\subsubsection[{spi\-Init\-Bit\-Order}]{\setlength{\rightskip}{0pt plus 5cm}void spi\-::spi\-Init\-Bit\-Order (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspi_ab1569afd18aaa3ecaacc5252dab1177c}
+Sets bit order \hypertarget{classspi_ace5d4b909ab9a103ae676df30db26836}{\index{spi@{spi}!spi\-Send\-Receive@{spi\-Send\-Receive}}
+\index{spi\-Send\-Receive@{spi\-Send\-Receive}!spi@{spi}}
+\subsubsection[{spi\-Send\-Receive}]{\setlength{\rightskip}{0pt plus 5cm}int spi\-::spi\-Send\-Receive (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t $\ast$}]{p\-Tx\-Buf, }
+\item[{int}]{i\-Tx\-Len, }
+\item[{uint8\-\_\-t $\ast$}]{p\-Rx\-Buf, }
+\item[{int}]{i\-Rx\-Len}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspi_ace5d4b909ab9a103ae676df30db26836}
+spi\-Send\-Receive has two functionalities sends$\vert$/writes to the S\-P\-I and send/receive from the S\-P\-I. The method make use of the linux function ioctl that performs the generic I/\-O operations. 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+common/spi.\-h\item 
+common/spi.\-cpp\end{DoxyCompactItemize}

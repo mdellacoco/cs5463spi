@@ -1,0 +1,67 @@
+\hypertarget{classClientSocket}{\section{Client\-Socket Class Reference}
+\label{classClientSocket}\index{Client\-Socket@{Client\-Socket}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classClientSocket_af299934a55a0b88e141b35274a3cdcea}{int {\bfseries create\-And\-Connect} ()}\label{classClientSocket_af299934a55a0b88e141b35274a3cdcea}
+
+\item 
+\hypertarget{classClientSocket_adfb5189ad7202b82d1eeb70ce5e77960}{void {\bfseries write\-And\-Read} (const string \&message, string $\ast$msg\-\_\-in)}\label{classClientSocket_adfb5189ad7202b82d1eeb70ce5e77960}
+
+\item 
+\hypertarget{classClientSocket_a5f98ffaaca563cf848e2d6b719caa80d}{void {\bfseries close\-Socket} ()}\label{classClientSocket_a5f98ffaaca563cf848e2d6b719caa80d}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classClientSocket}{Client\-Socket} $\ast$ \hyperlink{classClientSocket_a4eb39fbb48cec6d8a838c0dc12147f6d}{Instance} (const string \&servername, const string \&portno)
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classClientSocket_a0487c7492eabc6c87af2c05fd9e50840}{{\bfseries Client\-Socket} (const \hyperlink{classClientSocket}{Client\-Socket} \&client\-Socket)}\label{classClientSocket_a0487c7492eabc6c87af2c05fd9e50840}
+
+\item 
+\hypertarget{classClientSocket_a351935a26d720acd846a39d22f5f135f}{\hyperlink{classClientSocket}{Client\-Socket} \& {\bfseries operator=} (const \hyperlink{classClientSocket}{Client\-Socket} \&client\-Socket)}\label{classClientSocket_a351935a26d720acd846a39d22f5f135f}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classClientSocket_a05c34cad940b38410768c66bea290034}{bool {\bfseries active}}\label{classClientSocket_a05c34cad940b38410768c66bea290034}
+
+\item 
+\hypertarget{classClientSocket_abd67bad694c72d21c601ace9bea085bc}{int {\bfseries m\-\_\-sfd}}\label{classClientSocket_abd67bad694c72d21c601ace9bea085bc}
+
+\item 
+\hypertarget{classClientSocket_a15238816aabfcff17642912b5d7fb550}{string {\bfseries m\-\_\-servername}}\label{classClientSocket_a15238816aabfcff17642912b5d7fb550}
+
+\item 
+\hypertarget{classClientSocket_a2509765a14ff27cee1d1f0d88f4af69e}{string {\bfseries m\-\_\-service}}\label{classClientSocket_a2509765a14ff27cee1d1f0d88f4af69e}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classClientSocket_ad956c61990098724ef02e0674fa122ed}{static \hyperlink{classClientSocket}{Client\-Socket} $\ast$ {\bfseries m\-\_\-client\-Socket\-Instance} = N\-U\-L\-L}\label{classClientSocket_ad956c61990098724ef02e0674fa122ed}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classClientSocket_a4eb39fbb48cec6d8a838c0dc12147f6d}{\index{Client\-Socket@{Client\-Socket}!Instance@{Instance}}
+\index{Instance@{Instance}!ClientSocket@{Client\-Socket}}
+\subsubsection[{Instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Client\-Socket} $\ast$ Client\-Socket\-::\-Instance (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{servername, }
+\item[{const string \&}]{portno}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classClientSocket_a4eb39fbb48cec6d8a838c0dc12147f6d}
+m\-\_\-client\-Socket\-Instance.\-active = true; 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+common/Client\-Socket.\-h\item 
+common/Client\-Socket.\-cpp\end{DoxyCompactItemize}

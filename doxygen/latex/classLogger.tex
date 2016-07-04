@@ -1,0 +1,75 @@
+\hypertarget{classLogger}{\section{Logger Class Reference}
+\label{classLogger}\index{Logger@{Logger}}
+}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries Priority} \{ \\*
+{\bfseries D\-E\-B\-U\-G}, 
+{\bfseries C\-O\-N\-F\-I\-G}, 
+{\bfseries I\-N\-F\-O}, 
+{\bfseries W\-A\-R\-N\-I\-N\-G}, 
+\\*
+{\bfseries E\-R\-R\-O\-R}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classLogger_ad766b6ac85f82411a6f25af21eea58d7}{void {\bfseries Write\-Read\-Remote} (const string \&message)}\label{classLogger_ad766b6ac85f82411a6f25af21eea58d7}
+
+\item 
+\hypertarget{classLogger_a16da1083e70f46051275d4ac208c3626}{void {\bfseries Write\-Local} (int facility, int priority, const string \&message)}\label{classLogger_a16da1083e70f46051275d4ac208c3626}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classLogger_aa35f17d5b79217f4b5c43dcb44b97746}{static \hyperlink{classLogger}{Logger} $\ast$ {\bfseries Instance} (const string \&log\-File, \hyperlink{classClientSocket}{Client\-Socket} $\ast$p\-Socket\-Handler, \hyperlink{structloggerInfo}{logger\-Info} $\ast$p\-My\-Logger\-Info)}\label{classLogger_aa35f17d5b79217f4b5c43dcb44b97746}
+
+\item 
+\hypertarget{classLogger_a45f0936b9f16c4f8f93ca409a9486e94}{static void {\bfseries Stop\-Instance} ()}\label{classLogger_a45f0936b9f16c4f8f93ca409a9486e94}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classLogger_a2c5d5039e76ef20903ce7cfbc8030d47}{{\bfseries Logger} (const \hyperlink{classLogger}{Logger} \&logger)}\label{classLogger_a2c5d5039e76ef20903ce7cfbc8030d47}
+
+\item 
+\hypertarget{classLogger_a400dd030dcec25d075f87202e880c5b9}{\hyperlink{classLogger}{Logger} \& {\bfseries operator=} (const \hyperlink{classLogger}{Logger} \&logger)}\label{classLogger_a400dd030dcec25d075f87202e880c5b9}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classLogger_a79d231b8f8c27d0c0b6f963f753b2be1}{bool {\bfseries active}}\label{classLogger_a79d231b8f8c27d0c0b6f963f753b2be1}
+
+\item 
+\hypertarget{classLogger_afea7dca3fd4d8f909bb5d5906d2b5293}{ofstream {\bfseries file\-Stream}}\label{classLogger_afea7dca3fd4d8f909bb5d5906d2b5293}
+
+\item 
+\hypertarget{classLogger_a2d408b566a4a54aafb391ca9ed3ffa03}{Priority {\bfseries min\-Priority}}\label{classLogger_a2d408b566a4a54aafb391ca9ed3ffa03}
+
+\item 
+\hypertarget{classLogger_a1a3d4ce692f3d78cc4f62dec79cb1685}{\hyperlink{classClientSocket}{Client\-Socket} $\ast$ {\bfseries p\-Socket\-Handler}}\label{classLogger_a1a3d4ce692f3d78cc4f62dec79cb1685}
+
+\item 
+\hypertarget{classLogger_a4a6cbed1d68b500ccd2bf6f8af486e88}{\hyperlink{structloggerInfo}{logger\-Info} $\ast$ {\bfseries p\-Logger\-Info}}\label{classLogger_a4a6cbed1d68b500ccd2bf6f8af486e88}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classLogger_af34a222ad5ec1399d6c529e0c4001b36}{static const string {\bfseries P\-R\-I\-O\-R\-I\-T\-Y\-\_\-\-N\-A\-M\-E\-S} \mbox{[}$\,$\mbox{]}}\label{classLogger_af34a222ad5ec1399d6c529e0c4001b36}
+
+\item 
+\hypertarget{classLogger_a5e9fd267cd621afeb1201131071425ea}{static \hyperlink{classLogger}{Logger} $\ast$ {\bfseries instance} = N\-U\-L\-L}\label{classLogger_a5e9fd267cd621afeb1201131071425ea}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+common/Logger.\-h\item 
+common/Logger.\-cpp\end{DoxyCompactItemize}

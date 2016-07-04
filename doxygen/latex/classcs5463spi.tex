@@ -1,0 +1,335 @@
+\hypertarget{classcs5463spi}{\section{cs5463spi Class Reference}
+\label{classcs5463spi}\index{cs5463spi@{cs5463spi}}
+}
+
+
+{\ttfamily \#include $<$cs5463\-\_\-spi.\-h$>$}
+
+Inheritance diagram for cs5463spi\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcs5463spi}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcs5463spi_a8b67189087e7c275a4da52992bc20324}{cs5463spi} ()
+\item 
+void \hyperlink{classcs5463spi_a2f1ec8b010596b4af7f64c486cdaf179}{Run} ()
+\item 
+bool \hyperlink{classcs5463spi_ad7baacfc87b389db65a26bd9886c6cc2}{Calibrate} (int cal\-Type=0)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcs5463spi_a8f0e36eb00a90919ae9a193b8afe69cb}{Serial\-Port\-Init} ()
+\item 
+void \hyperlink{classcs5463spi_afd9b989c60c3d8d24843862702dfcdea}{Serial\-Port\-Re\-Init} ()
+\item 
+void \hyperlink{classcs5463spi_ab61f5c633635597575dd756dd26391f3}{spi\-Init} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \\*
+{\bfseries ic\-\_\-not}, 
+{\bfseries fup}, 
+{\bfseries lsd}, 
+{\bfseries iod}, 
+\\*
+{\bfseries vod}, 
+{\bfseries tod} =6, 
+{\bfseries tup}, 
+{\bfseries vsag} =10, 
+\\*
+{\bfseries ifault}, 
+{\bfseries eor}, 
+{\bfseries vror}, 
+{\bfseries iror}, 
+\\*
+{\bfseries vor} =16, 
+{\bfseries ior}, 
+{\bfseries crdy} =20, 
+{\bfseries drdy} =23
+ \}
+\item 
+enum \{ {\bfseries i\-\_\-dc\-\_\-offset} = 1, 
+{\bfseries v\-\_\-dc\-\_\-offset}, 
+{\bfseries iv\-\_\-dc\-\_\-offset}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classcs5463spi_ac5ceba73424261fdf42f68448535ec75}{Write\-Register} (uint8\-\_\-t cmd, uint8\-\_\-t high\-Byte, uint8\-\_\-t mid\-Byte, uint8\-\_\-t low\-Byte)
+\item 
+int \hyperlink{classcs5463spi_a45c08ae60291209a0878b859872a9fbe}{Read\-Register} (uint8\-\_\-t cmd, uint8\-\_\-t $\ast$p\-Rxed)
+\item 
+int \hyperlink{classcs5463spi_a4eef4adeb61cdf3d818e410d4d5e37aa}{send\-Cmd} (uint8\-\_\-t cmd)
+\item 
+\hypertarget{classcs5463spi_a9e5ec18debabcf9ef375224cf08cecb0}{void {\bfseries set\-Page} (uint8\-\_\-t pg)}\label{classcs5463spi_a9e5ec18debabcf9ef375224cf08cecb0}
+
+\item 
+void \hyperlink{classcs5463spi_aafda987549f89a9917cec36f74e17874}{Sw\-Reset} ()
+\item 
+void \hyperlink{classcs5463spi_af398289d5aa2398af031696f58fbf2e5}{Power\-Down} (uint8\-\_\-t pw\-Cmd)
+\item 
+\hypertarget{classcs5463spi_a98b2af7f4a7ffe2e8281557a7ec91394}{void {\bfseries Sync} (uint8\-\_\-t sync\-Type)}\label{classcs5463spi_a98b2af7f4a7ffe2e8281557a7ec91394}
+
+\item 
+int \hyperlink{classcs5463spi_ab4061eb580d7951c6a0a1f57cef02359}{Start\-Convertion} (uint8\-\_\-t start\-Cmd)
+\item 
+bool \hyperlink{classcs5463spi_ad121321a0ce78ea58e1425f157b96074}{Interrupt\-Handler\-Init} (bool D\-R\-D\-Y)
+\item 
+bool \hyperlink{classcs5463spi_abffdb96164657da7d6c8f125c3b776ec}{Disable\-Interrupts} ()
+\item 
+\hypertarget{classcs5463spi_a61d65a32ed681d1bec2ab60a723502e9}{void {\bfseries Interrupt\-Handler} ()}\label{classcs5463spi_a61d65a32ed681d1bec2ab60a723502e9}
+
+\item 
+void \hyperlink{classcs5463spi_a3dca190be7b9d15e5f224caabf3ea356}{Check\-Status} (uint8\-\_\-t $\ast$status)
+\item 
+bool \hyperlink{classcs5463spi_af8e47c4b7ef0aa7f37e4ddedb6545508}{Check\-Status\-Ready} (int bit)
+\item 
+bool \hyperlink{classcs5463spi_a6607917b066f2e6733bc4b46c13af61c}{Ichann\-D\-Coffset\-Cal} ()
+\item 
+bool \hyperlink{classcs5463spi_a51236d9b55605eeba87c7f016b1bcf55}{Vchann\-D\-Coffset\-Cal} ()
+\item 
+bool \hyperlink{classcs5463spi_a825ab80592f6d90501c5f4d83977ded5}{Ichann\-A\-Coffset\-Cal} ()
+\item 
+bool \hyperlink{classcs5463spi_a6fdc28d935e69c70eb844c030e73654a}{Vchann\-A\-Coffset\-Cal} ()
+\item 
+void \hyperlink{classcs5463spi_a9213fc3397234424ce5c62dc5b13e634}{Make\-Readings} ()
+\item 
+\hypertarget{classcs5463spi_a7fbf4a5fbc7f415afcc74a265883c674}{\hyperlink{structcs5463ElectricityAttr}{cs5463\-Electricity\-Attr} {\bfseries get\-Read\-Values} ()}\label{classcs5463spi_a7fbf4a5fbc7f415afcc74a265883c674}
+
+\item 
+void \hyperlink{classcs5463spi_a166fefb7fbb67b265dffc6c9c07ef96b}{set\-Mode\-Spi} (uint8\-\_\-t wr\-Mode, uint8\-\_\-t rd\-Mode)
+\item 
+uint32\-\_\-t \hyperlink{classcs5463spi_aa85ec2bd59b4fc80c7dc59812e6d186e}{make32} (uint8\-\_\-t $\ast$var)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcs5463spi_a781696b7e209c506e792ad0e20d79a2e}{\hyperlink{structRegReadCmd}{Reg\-Read\-Cmd} {\bfseries m\-\_\-reg\-Read\-Cmd}}\label{classcs5463spi_a781696b7e209c506e792ad0e20d79a2e}
+
+\item 
+\hypertarget{classcs5463spi_a61ca58fa6b0046b7fc1ce4d5db0bed4a}{\hyperlink{structRegWrCmd}{Reg\-Wr\-Cmd} {\bfseries m\-\_\-reg\-Wr\-Cmd}}\label{classcs5463spi_a61ca58fa6b0046b7fc1ce4d5db0bed4a}
+
+\item 
+\hypertarget{classcs5463spi_a1bcaa5292a33a2dc7a61ff31ba436d0c}{\hyperlink{structcs5463Commands}{cs5463\-Commands} {\bfseries m\-\_\-cmds}}\label{classcs5463spi_a1bcaa5292a33a2dc7a61ff31ba436d0c}
+
+\item 
+\hypertarget{classcs5463spi_a47886abba6bf33a5683f56ef9c5ff1cc}{\hyperlink{structcs5463ElectricityAttr}{cs5463\-Electricity\-Attr} {\bfseries m\-\_\-electricity\-Attr}}\label{classcs5463spi_a47886abba6bf33a5683f56ef9c5ff1cc}
+
+\item 
+\hypertarget{classcs5463spi_aec97d1e881b52d65cb85b20def733527}{\hyperlink{structcs5463spiParams}{cs5463spi\-Params} {\bfseries m\-\_\-spi\-Params}}\label{classcs5463spi_aec97d1e881b52d65cb85b20def733527}
+
+\item 
+\hypertarget{classcs5463spi_af02787a5e4858c19b44215b5b955efa5}{\hyperlink{structcs5463sysCalOffsetVals}{cs5463sys\-Cal\-Offset\-Vals} {\bfseries m\-\_\-sys\-Cal\-Offset}}\label{classcs5463spi_af02787a5e4858c19b44215b5b955efa5}
+
+\item 
+\hypertarget{classcs5463spi_a26e1ce56ca06dba3d73c63c8b10a4214}{\hyperlink{structcs5463sysCalGainVals}{cs5463sys\-Cal\-Gain\-Vals} {\bfseries m\-\_\-sys\-Cal\-Gain}}\label{classcs5463spi_a26e1ce56ca06dba3d73c63c8b10a4214}
+
+\item 
+\hypertarget{classcs5463spi_a4a13325c4a439e50ebf0276048cf542e}{std\-::vector$<$ std\-::string $>$ {\bfseries m\-\_\-status\-Warn}}\label{classcs5463spi_a4a13325c4a439e50ebf0276048cf542e}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Calibration Fudge Factors Class that defines the functionalities of C\-S5463. It derives from the spi class 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcs5463spi_a8b67189087e7c275a4da52992bc20324}{\index{cs5463spi@{cs5463spi}!cs5463spi@{cs5463spi}}
+\index{cs5463spi@{cs5463spi}!cs5463spi@{cs5463spi}}
+\subsubsection[{cs5463spi}]{\setlength{\rightskip}{0pt plus 5cm}cs5463spi\-::cs5463spi (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcs5463spi_a8b67189087e7c275a4da52992bc20324}
+Constructor 
+
+\subsection{Member Function Documentation}
+\hypertarget{classcs5463spi_ad7baacfc87b389db65a26bd9886c6cc2}{\index{cs5463spi@{cs5463spi}!Calibrate@{Calibrate}}
+\index{Calibrate@{Calibrate}!cs5463spi@{cs5463spi}}
+\subsubsection[{Calibrate}]{\setlength{\rightskip}{0pt plus 5cm}bool cs5463spi\-::\-Calibrate (
+\begin{DoxyParamCaption}
+\item[{int}]{cal\-Type = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classcs5463spi_ad7baacfc87b389db65a26bd9886c6cc2}
+Calibrate Method, public domain 
+
+Reimplemented from \hyperlink{classspi}{spi}.
+
+\hypertarget{classcs5463spi_a3dca190be7b9d15e5f224caabf3ea356}{\index{cs5463spi@{cs5463spi}!Check\-Status@{Check\-Status}}
+\index{Check\-Status@{Check\-Status}!cs5463spi@{cs5463spi}}
+\subsubsection[{Check\-Status}]{\setlength{\rightskip}{0pt plus 5cm}void cs5463spi\-::\-Check\-Status (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t $\ast$}]{status}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_a3dca190be7b9d15e5f224caabf3ea356}
+Check\-Status \hypertarget{classcs5463spi_af8e47c4b7ef0aa7f37e4ddedb6545508}{\index{cs5463spi@{cs5463spi}!Check\-Status\-Ready@{Check\-Status\-Ready}}
+\index{Check\-Status\-Ready@{Check\-Status\-Ready}!cs5463spi@{cs5463spi}}
+\subsubsection[{Check\-Status\-Ready}]{\setlength{\rightskip}{0pt plus 5cm}bool cs5463spi\-::\-Check\-Status\-Ready (
+\begin{DoxyParamCaption}
+\item[{int}]{bit}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_af8e47c4b7ef0aa7f37e4ddedb6545508}
+bool Check\-Status\-Ready(uint8\-\_\-t$\ast$ byte, int bit); check data ready and convertion ready \hypertarget{classcs5463spi_abffdb96164657da7d6c8f125c3b776ec}{\index{cs5463spi@{cs5463spi}!Disable\-Interrupts@{Disable\-Interrupts}}
+\index{Disable\-Interrupts@{Disable\-Interrupts}!cs5463spi@{cs5463spi}}
+\subsubsection[{Disable\-Interrupts}]{\setlength{\rightskip}{0pt plus 5cm}bool cs5463spi\-::\-Disable\-Interrupts (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_abffdb96164657da7d6c8f125c3b776ec}
+\hyperlink{classcs5463spi_abffdb96164657da7d6c8f125c3b776ec}{Disable\-Interrupts()} \hypertarget{classcs5463spi_a825ab80592f6d90501c5f4d83977ded5}{\index{cs5463spi@{cs5463spi}!Ichann\-A\-Coffset\-Cal@{Ichann\-A\-Coffset\-Cal}}
+\index{Ichann\-A\-Coffset\-Cal@{Ichann\-A\-Coffset\-Cal}!cs5463spi@{cs5463spi}}
+\subsubsection[{Ichann\-A\-Coffset\-Cal}]{\setlength{\rightskip}{0pt plus 5cm}bool cs5463spi\-::\-Ichann\-A\-Coffset\-Cal (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_a825ab80592f6d90501c5f4d83977ded5}
+Performs I Channel A\-C Offset Calibration \hypertarget{classcs5463spi_a6607917b066f2e6733bc4b46c13af61c}{\index{cs5463spi@{cs5463spi}!Ichann\-D\-Coffset\-Cal@{Ichann\-D\-Coffset\-Cal}}
+\index{Ichann\-D\-Coffset\-Cal@{Ichann\-D\-Coffset\-Cal}!cs5463spi@{cs5463spi}}
+\subsubsection[{Ichann\-D\-Coffset\-Cal}]{\setlength{\rightskip}{0pt plus 5cm}bool cs5463spi\-::\-Ichann\-D\-Coffset\-Cal (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_a6607917b066f2e6733bc4b46c13af61c}
+Performs I Channel D\-C Offset Calibration \hypertarget{classcs5463spi_ad121321a0ce78ea58e1425f157b96074}{\index{cs5463spi@{cs5463spi}!Interrupt\-Handler\-Init@{Interrupt\-Handler\-Init}}
+\index{Interrupt\-Handler\-Init@{Interrupt\-Handler\-Init}!cs5463spi@{cs5463spi}}
+\subsubsection[{Interrupt\-Handler\-Init}]{\setlength{\rightskip}{0pt plus 5cm}bool cs5463spi\-::\-Interrupt\-Handler\-Init (
+\begin{DoxyParamCaption}
+\item[{bool}]{D\-R\-D\-Y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_ad121321a0ce78ea58e1425f157b96074}
+Enables Interrupts \hypertarget{classcs5463spi_aa85ec2bd59b4fc80c7dc59812e6d186e}{\index{cs5463spi@{cs5463spi}!make32@{make32}}
+\index{make32@{make32}!cs5463spi@{cs5463spi}}
+\subsubsection[{make32}]{\setlength{\rightskip}{0pt plus 5cm}uint32\-\_\-t cs5463spi\-::make32 (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t $\ast$}]{var}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_aa85ec2bd59b4fc80c7dc59812e6d186e}
+Makes 3 bytes into a 32 bit number; \hypertarget{classcs5463spi_a9213fc3397234424ce5c62dc5b13e634}{\index{cs5463spi@{cs5463spi}!Make\-Readings@{Make\-Readings}}
+\index{Make\-Readings@{Make\-Readings}!cs5463spi@{cs5463spi}}
+\subsubsection[{Make\-Readings}]{\setlength{\rightskip}{0pt plus 5cm}void cs5463spi\-::\-Make\-Readings (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_a9213fc3397234424ce5c62dc5b13e634}
+Starts register reading. This is an overridden function. \hypertarget{classcs5463spi_af398289d5aa2398af031696f58fbf2e5}{\index{cs5463spi@{cs5463spi}!Power\-Down@{Power\-Down}}
+\index{Power\-Down@{Power\-Down}!cs5463spi@{cs5463spi}}
+\subsubsection[{Power\-Down}]{\setlength{\rightskip}{0pt plus 5cm}void cs5463spi\-::\-Power\-Down (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{pw\-Cmd}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_af398289d5aa2398af031696f58fbf2e5}
+Power Down \hypertarget{classcs5463spi_a45c08ae60291209a0878b859872a9fbe}{\index{cs5463spi@{cs5463spi}!Read\-Register@{Read\-Register}}
+\index{Read\-Register@{Read\-Register}!cs5463spi@{cs5463spi}}
+\subsubsection[{Read\-Register}]{\setlength{\rightskip}{0pt plus 5cm}int cs5463spi\-::\-Read\-Register (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{cmd, }
+\item[{uint8\-\_\-t $\ast$}]{p\-Rxed}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_a45c08ae60291209a0878b859872a9fbe}
+Reads register value. This is a overridden function. Spi mode 1 is used to read data. (data is read on the clock falling edge. \hypertarget{classcs5463spi_a2f1ec8b010596b4af7f64c486cdaf179}{\index{cs5463spi@{cs5463spi}!Run@{Run}}
+\index{Run@{Run}!cs5463spi@{cs5463spi}}
+\subsubsection[{Run}]{\setlength{\rightskip}{0pt plus 5cm}void cs5463spi\-::\-Run (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classcs5463spi_a2f1ec8b010596b4af7f64c486cdaf179}
+Reads all required Electrical parameters 
+
+Reimplemented from \hyperlink{classspi}{spi}.
+
+\hypertarget{classcs5463spi_a4eef4adeb61cdf3d818e410d4d5e37aa}{\index{cs5463spi@{cs5463spi}!send\-Cmd@{send\-Cmd}}
+\index{send\-Cmd@{send\-Cmd}!cs5463spi@{cs5463spi}}
+\subsubsection[{send\-Cmd}]{\setlength{\rightskip}{0pt plus 5cm}int cs5463spi\-::send\-Cmd (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{cmd}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_a4eef4adeb61cdf3d818e410d4d5e37aa}
+Sets command to register Commands are 8 bit in length (one byte) \hypertarget{classcs5463spi_a8f0e36eb00a90919ae9a193b8afe69cb}{\index{cs5463spi@{cs5463spi}!Serial\-Port\-Init@{Serial\-Port\-Init}}
+\index{Serial\-Port\-Init@{Serial\-Port\-Init}!cs5463spi@{cs5463spi}}
+\subsubsection[{Serial\-Port\-Init}]{\setlength{\rightskip}{0pt plus 5cm}void cs5463spi\-::\-Serial\-Port\-Init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcs5463spi_a8f0e36eb00a90919ae9a193b8afe69cb}
+Initializes the C\-S5463's S\-P\-I. This is an overridden function. 
+
+Reimplemented from \hyperlink{classspi}{spi}.
+
+\hypertarget{classcs5463spi_afd9b989c60c3d8d24843862702dfcdea}{\index{cs5463spi@{cs5463spi}!Serial\-Port\-Re\-Init@{Serial\-Port\-Re\-Init}}
+\index{Serial\-Port\-Re\-Init@{Serial\-Port\-Re\-Init}!cs5463spi@{cs5463spi}}
+\subsubsection[{Serial\-Port\-Re\-Init}]{\setlength{\rightskip}{0pt plus 5cm}void cs5463spi\-::\-Serial\-Port\-Re\-Init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcs5463spi_afd9b989c60c3d8d24843862702dfcdea}
+This function reinitializes the C\-S5463 serial port \hypertarget{classcs5463spi_a166fefb7fbb67b265dffc6c9c07ef96b}{\index{cs5463spi@{cs5463spi}!set\-Mode\-Spi@{set\-Mode\-Spi}}
+\index{set\-Mode\-Spi@{set\-Mode\-Spi}!cs5463spi@{cs5463spi}}
+\subsubsection[{set\-Mode\-Spi}]{\setlength{\rightskip}{0pt plus 5cm}void cs5463spi\-::set\-Mode\-Spi (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{wr\-Mode, }
+\item[{uint8\-\_\-t}]{rd\-Mode}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_a166fefb7fbb67b265dffc6c9c07ef96b}
+Sets the S\-P\-I mode. This is needed as the C\-S5463 has different spi modes for data reads and data writes. \hypertarget{classcs5463spi_ab61f5c633635597575dd756dd26391f3}{\index{cs5463spi@{cs5463spi}!spi\-Init@{spi\-Init}}
+\index{spi\-Init@{spi\-Init}!cs5463spi@{cs5463spi}}
+\subsubsection[{spi\-Init}]{\setlength{\rightskip}{0pt plus 5cm}void cs5463spi\-::spi\-Init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcs5463spi_ab61f5c633635597575dd756dd26391f3}
+Initilalizes spi Device. 
+
+Reimplemented from \hyperlink{classspi_af6b5a441ef9014df209fa3803d0fa68f}{spi}.
+
+\hypertarget{classcs5463spi_ab4061eb580d7951c6a0a1f57cef02359}{\index{cs5463spi@{cs5463spi}!Start\-Convertion@{Start\-Convertion}}
+\index{Start\-Convertion@{Start\-Convertion}!cs5463spi@{cs5463spi}}
+\subsubsection[{Start\-Convertion}]{\setlength{\rightskip}{0pt plus 5cm}int cs5463spi\-::\-Start\-Convertion (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{start\-Cmd}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_ab4061eb580d7951c6a0a1f57cef02359}
+Starts C\-S5463 convertion. \hypertarget{classcs5463spi_aafda987549f89a9917cec36f74e17874}{\index{cs5463spi@{cs5463spi}!Sw\-Reset@{Sw\-Reset}}
+\index{Sw\-Reset@{Sw\-Reset}!cs5463spi@{cs5463spi}}
+\subsubsection[{Sw\-Reset}]{\setlength{\rightskip}{0pt plus 5cm}void cs5463spi\-::\-Sw\-Reset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_aafda987549f89a9917cec36f74e17874}
+Performs a software reset of C\-S5463 S\-P\-I \hypertarget{classcs5463spi_a6fdc28d935e69c70eb844c030e73654a}{\index{cs5463spi@{cs5463spi}!Vchann\-A\-Coffset\-Cal@{Vchann\-A\-Coffset\-Cal}}
+\index{Vchann\-A\-Coffset\-Cal@{Vchann\-A\-Coffset\-Cal}!cs5463spi@{cs5463spi}}
+\subsubsection[{Vchann\-A\-Coffset\-Cal}]{\setlength{\rightskip}{0pt plus 5cm}bool cs5463spi\-::\-Vchann\-A\-Coffset\-Cal (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_a6fdc28d935e69c70eb844c030e73654a}
+Performs V Channel A\-C Offset Calibration \hypertarget{classcs5463spi_a51236d9b55605eeba87c7f016b1bcf55}{\index{cs5463spi@{cs5463spi}!Vchann\-D\-Coffset\-Cal@{Vchann\-D\-Coffset\-Cal}}
+\index{Vchann\-D\-Coffset\-Cal@{Vchann\-D\-Coffset\-Cal}!cs5463spi@{cs5463spi}}
+\subsubsection[{Vchann\-D\-Coffset\-Cal}]{\setlength{\rightskip}{0pt plus 5cm}bool cs5463spi\-::\-Vchann\-D\-Coffset\-Cal (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_a51236d9b55605eeba87c7f016b1bcf55}
+Performs V Channel D\-C Offset calibration \hypertarget{classcs5463spi_ac5ceba73424261fdf42f68448535ec75}{\index{cs5463spi@{cs5463spi}!Write\-Register@{Write\-Register}}
+\index{Write\-Register@{Write\-Register}!cs5463spi@{cs5463spi}}
+\subsubsection[{Write\-Register}]{\setlength{\rightskip}{0pt plus 5cm}int cs5463spi\-::\-Write\-Register (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{cmd, }
+\item[{uint8\-\_\-t}]{high\-Byte, }
+\item[{uint8\-\_\-t}]{mid\-Byte, }
+\item[{uint8\-\_\-t}]{low\-Byte}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classcs5463spi_ac5ceba73424261fdf42f68448535ec75}
+Writes command/value to register 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+cs5463\-\_\-spi.\-h\item 
+cs5463\-\_\-spi.\-cpp\end{DoxyCompactItemize}
