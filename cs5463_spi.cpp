@@ -6,6 +6,7 @@
  */
 
 #include "cs5463_spi.h"
+#include <cmath>
 
 
 /**
@@ -560,13 +561,14 @@ void cs5463spi::SetCtrlVal(uint8_t highByte, uint8_t midByte, uint8_t lowByte){
  */
 
 void cs5463spi::spiInit() {
+
   //Set generic spi parameters
     spi::setSpiMaxSpeed(m_spiParams.MAX_FREQ);
     spi::setSpiWrMode(m_spiParams.MODE_0);
     spi::setSpiRdMode(m_spiParams.MODE_0);
 	spi::setBitOrder(m_spiParams.BIT_ORDER);  //sets the bit order for CS5463
 	spi::setSpiBPW(m_spiParams.BPW);
-	spi::spiInitBitOrder();
+	//spi::spiInitBitOrder();
 	spi::spiInit();
 
 	//Set CS5463 running parameters (Init Serial Port)
@@ -702,13 +704,8 @@ int cs5463spi::ReadRegister(uint8_t addr, uint8_t* pRxed)
 	int res;
 
 	memset(txBuf, 0xFF, txLength);
-	memset(pRxed, 0x00, txLength);
-
-
 
 	txBuf[0] = addr << 1;  //register address
-
-	printf("Txed to Read: 0x%x 0x%x 0x%x 0x%x\n", txBuf[0], txBuf[1], txBuf[2], txBuf[3]);
 
 	res = spi::spiSendReceive(txBuf, txLength, pRxed, txLength);
 
@@ -771,7 +768,8 @@ bool cs5463spi::DisableInterrupts(){
 	  action = true;
    }
    else
-      m_mySPISysLog->writeErrLog("Disable Interrupts failed.");
+    //  m_mySPISysLog->writeErrLog("Disable Interrupts failed.");
+   m_pMyLogger->WriteLocal(LOG_LOCAL0, LOG_ERR, "Disable Interrupts failed.");
 
   return action;
 }
@@ -788,7 +786,8 @@ bool cs5463spi::InterruptHandlerInit(bool DRDY){
 	// Status Reg clear/reset
 	localstatus = WriteRegister(m_cs5463NumList[status].addr, m_cmds.SYNC_1, m_cmds.SYNC_1, m_cmds.SYNC_1);
 	if(localstatus < 0) {
-		m_mySPISysLog->writeErrLog("Enable Interrupts: clear/reset Status Register failed.");
+		//m_mySPISysLog->writeErrLog("Enable Interrupts: clear/reset Status Register failed.");
+		m_pMyLogger->WriteLocal(LOG_LOCAL0, LOG_ERR, "Enable Interrupts: clear/reset Status Register failed.");
 		return false;
 	}
 	//enable interrupts
@@ -796,7 +795,9 @@ bool cs5463spi::InterruptHandlerInit(bool DRDY){
 		localstatus = WriteRegister(m_cs5463NumList[mask].addr, 0x03, 0x7C, 0xDC);
 
 	  if(localstatus < 0)
-		  m_mySPISysLog->writeErrLog("Enable Interrupts failed.");
+		 // m_mySPISysLog->writeErrLog("Enable Interrupts failed.");
+		  m_pMyLogger->WriteLocal(LOG_LOCAL0, LOG_ERR, "Enable Interrupts failed.");
+
 	}
 	return status;
 }
@@ -848,8 +849,8 @@ void cs5463spi::CheckStatus() {
 
 		     if(result) {
 		    	 std::string msg;
-		    	 msg = "Status: " + m_statusWarn[i];
-		    	 m_mySPISysLog->writeMsgLog(msg.c_str());
+		    	 msg = "Status: " + m_statusWarn[i]; //TODO change to only report a failure.
+		    	 //m_mySPISysLog->writeMsgLog(msg.c_str());
 			     printf("%s\n", msg.c_str());
 		    }
 	      }
@@ -861,8 +862,8 @@ void cs5463spi::CheckStatus() {
 
 /**
  * bool CheckStatusReady(uint8_t* byte, int bit);
- * check data ready and convertion ready
- * returns tru or false on Data Ready or Convertion Ready
+ * check data ready, convertion ready and temperature ready
+ * returns true on data query ready
  **/
 
 bool cs5463spi::CheckStatusReady(int bit){
@@ -874,10 +875,8 @@ bool cs5463spi::CheckStatusReady(int bit){
 
   //Reads Status Register
 
-  ReadRegister(m_cs5463NumList[status].addr, rx1); //TODO change to correct index.
+  ReadRegister(m_cs5463NumList[status].addr, rx1);
 
-
-   //TODO: assert functionality if unsuccessful register reading
 
    uint8_t a = 0x01;
    int pos = 0;
@@ -885,14 +884,14 @@ bool cs5463spi::CheckStatusReady(int bit){
    if(bit == drdy || bit == crdy){
       pos = bit - 16;
 
-      if((rx1[1] & (a << pos))) {
+      if((rx1[1] & (a << pos))) {  // bits are in high byte
          bReady = true;
        }
    }
    else if(bit == tup) {
 	   pos = tup;
    }
-      if((rx1[3] & (a << pos))) {
+      if((rx1[3] & (a << pos))) {   // bit is in low byte.
 	     bReady = true;
 
    }
@@ -907,49 +906,139 @@ bool cs5463spi::CheckStatusReady(int bit){
 
 void cs5463spi::MakeReadings() {
 
-	uint8_t rx1[4];
-	memset(rx1, 0x00, sizeof(rx1));
+   uint8_t rx1[4], rx2[4], rx3[4], rx4[4], rx5[4], rx6[4], rx7[4], rx8[4], rx9[4], rx10[4];
+   uint8_t rx11[4], rx12[4], rx13[4];
 
-	uint8_t rx2[4];
+   while(1){
+     char *strAcc=0;
 
-	memset(rx2, 0xFF, sizeof(rx2));
-
-
-	while(1){
-
-	 char *strAcc=0;
-
-	 int bDone = false;
-	 int i = 1;
-
-	 //Status Clear
-	 WriteRegister(m_cs5463NumList[status].addr,m_cmds.SYNC_1, m_cmds.SYNC_1, m_cmds.SYNC_1);
-
-     do {
-           ReadRegister(m_cs5463NumList[i_rms].addr, rx1);
-           ReadRegister(m_cs5463NumList[v_rms].addr, rx2);
-           bDone = CheckStatusReady(drdy);
-           i++;
-     }while(bDone == false);
-
-     cout << i << "  "<< m_cs5463NumList[i_rms].name <<endl;
-
-     printf("Rxed Irms..: 0x%x  0x%x  0x%x 0x%x\n", *(rx1+0), *(rx1+1), *(rx1+2), *(rx1+3));
-     printf("Rxed Vrms..: 0x%x  0x%x  0x%x 0x%x\n\n", *(rx2+0), *(rx2+1), *(rx2+2), *(rx2+3));
-
-     ToDecimal(make32(rx1));
-     ToDecimal(make32(rx2));
-
-	 asprintf(&strAcc, "%sT 0.5 0.60 0.60 0.36 %d %d %d %d 1.0 0.000082 0.36 0.0000086 0.00051",
-			 m_dateTime.c_str(), rx1[0], rx1[1], rx1[2], rx1[3]);
+	  struct timespec startTime;
+	  long long elapsedTime = 0;
+	  double current, power;
 
 
-	// m_mySPISysLog->writeMsgLog(strAcc);
+	  memset(rx1, 0x00, sizeof(rx1));
+	  memset(rx2, 0x00, sizeof(rx2));
+	  memset(rx3, 0x00, sizeof(rx3));
+	  memset(rx4, 0x00, sizeof(rx4));
+	  memset(rx5, 0x00, sizeof(rx5));
+	  memset(rx6, 0x00, sizeof(rx6));
+	  memset(rx7, 0x00, sizeof(rx7));
+	  memset(rx8, 0x00, sizeof(rx8));
+	  memset(rx9, 0x00, sizeof(rx9));
+	  memset(rx10, 0x00, sizeof(rx10));
+	  memset(rx11, 0x00, sizeof(rx11));
+	  memset(rx12, 0x00, sizeof(rx12));
+	  memset(rx13, 0x00, sizeof(rx13));
 
-	// m_pMyLogger->WriteReadRemote(strAcc);
+
+	  m_cs5463NumList[p_act].value = 0;
+	  m_cs5463NumList[i_rms].value = 0;
+	  m_cs5463NumList[v_rms].value = 0;
+	  m_cs5463NumList[q].value = 0;
+	  m_cs5463NumList[temp].value = 0;
+	  m_cs5463NumList[i_int].value = 0;
+	  m_cs5463NumList[v_int].value = 0;
+	  m_cs5463NumList[q_trig].value = 0;
+	  m_cs5463NumList[pf].value = 0;
+	  m_cs5463NumList[p_h].value = 0;
+	  m_cs5463NumList[p_f].value = 0;
+	  m_cs5463NumList[q_f].value = 0;
+	  m_cs5463NumList[q_avg].value = 0;
+
+	  startTime = this->CurrentTime();
+
+	  current = 0.0;
+	  power = 0.0;
+
+	  do{
+
+	     elapsedTime = ElapsedTime(startTime);
+
+         int bDone = false;
+
+         WriteRegister(m_cs5463NumList[status].addr,m_cmds.SYNC_1, m_cmds.SYNC_1, m_cmds.SYNC_1);
+
+         do {
+        	ReadRegister(m_cs5463NumList[p_act].addr, rx1);
+        	ReadRegister(m_cs5463NumList[i_rms].addr, rx2);
+        	ReadRegister(m_cs5463NumList[v_rms].addr, rx3);
+        	ReadRegister(m_cs5463NumList[q].addr, rx4);
+        	ReadRegister(m_cs5463NumList[temp].addr, rx5);
+            ReadRegister(m_cs5463NumList[i_int].addr, rx6);
+            ReadRegister(m_cs5463NumList[v_int].addr, rx7);
+            ReadRegister(m_cs5463NumList[q_trig].addr, rx8);
+            ReadRegister(m_cs5463NumList[pf].addr, rx9);
+            ReadRegister(m_cs5463NumList[p_h].addr, rx10);
+            ReadRegister(m_cs5463NumList[p_f].addr, rx11);
+            ReadRegister(m_cs5463NumList[q_f].addr, rx12);
+            ReadRegister(m_cs5463NumList[q_avg].addr, rx13);
+
+            bDone = CheckStatusReady(drdy);
+         } while(bDone == false);
+
+
+         m_cs5463NumList[p_act].value = make32(rx1);  //Average Power
+         m_cs5463NumList[i_rms].value = make32(rx2);
+         m_cs5463NumList[v_rms].value = make32(rx3);
+         m_cs5463NumList[q].value = make32(rx4);   //Instantaneous Reactive Power
+         m_cs5463NumList[temp].value = make32(rx5);
+         m_cs5463NumList[i_int].value = make32(rx6);
+         m_cs5463NumList[v_int].value = make32(rx7);
+         m_cs5463NumList[q_trig].value = make32(rx8);
+         m_cs5463NumList[pf].value = make32(rx9);
+         m_cs5463NumList[p_h].value = make32(rx10);
+         m_cs5463NumList[p_f].value = make32(rx11);
+         m_cs5463NumList[q_f].value = make32(rx12);
+         m_cs5463NumList[q_avg].value = make32(rx13);
+
+         NumNotationConv(p_act);
+         NumNotationConv(i_rms);
+         NumNotationConv(v_rms);
+         NumNotationConv(q);
+         NumNotationConv(temp);
+         NumNotationConv(i_int);
+         NumNotationConv(v_int);
+         NumNotationConv(q_trig);
+         NumNotationConv(pf);
+         NumNotationConv(p_h);
+         NumNotationConv(p_f);
+         NumNotationConv(q_f);
+         NumNotationConv(q_avg);
+
+
+
+        current += m_cs5463NumList[i_int].valueDec;
+
+	  }while(elapsedTime < 2E9);
+
+	  cout << "Accum Current is: " << current << endl;
+
+      asprintf(&strAcc, "%sT%f %f %f %f %f %f %f %f %f %f %f %f %f",
+			             m_dateTime.c_str(),
+			             m_cs5463NumList[p_act].valueDec,
+			             m_cs5463NumList[i_rms].valueDec,
+			             m_cs5463NumList[v_rms].valueDec,
+			             m_cs5463NumList[q].valueDec,      //Instantaneous Reactive Power
+			             m_cs5463NumList[temp].valueDec,
+			             current,
+			             m_cs5463NumList[v_int].valueDec,
+			             m_cs5463NumList[q_trig].valueDec,
+			             m_cs5463NumList[pf].valueDec,
+			             m_cs5463NumList[p_h].valueDec,
+			             m_cs5463NumList[p_f].valueDec,
+			             m_cs5463NumList[q_f].valueDec,
+			             m_cs5463NumList[q_avg].valueDec
+                         );
+
+
+      printf("%s,\n", strAcc);
+
+      m_pMyLogger->WriteReadRemote(strAcc); //write remote
+	  m_pMyLogger->WriteLocal(LOG_LOCAL0, LOG_WARNING, strAcc);  //write local
 
 	  free(strAcc);
-	  sleep(1);
+	  //sleep(10);
 	 }
 }
 
@@ -1043,25 +1132,10 @@ void cs5463spi::Calibrate(int calType){
 
 }
 
-/**
- *  Makes 3 bytes into a 32 bit number;
- *
- */
-
-uint32_t cs5463spi::make32(uint8_t *var){
-
-	uint32_t num = (*(var+1)<<16) + (*(var+2)<<8) + *(var+3);
-
-	printf("0x%x, 0x%x, 0x%x\n", *(var+1), *(var+2), *(var+3));
-
-	cout << "NUmber is: " << num << endl;
-	return num;
-
-}
 
 /**
  * CalStatusReadyCheck
- * Check whether staus is ready or not.
+ * Check whether status is ready or not.
  */
 bool cs5463spi::CalStatusReadyCheck(long long maxElapsedTime){
 
@@ -1242,32 +1316,62 @@ bool cs5463spi::IsSet(uint8_t byte, int pos) {
 
 /**
  *
- *  Converts 2s complements to decimal.
+ *
  *
  */
-uint32_t cs5463spi::ToDecimal(uint32_t num){
-	std::bitset<24> bits(num);
+void cs5463spi::NumNotationConv(int reg){
 
-	int32_t result = num;
+	int32_t result = m_cs5463NumList[reg].value;  //the read value as int32
+	double normalized = 0.0;
 
-	if(bits[23] == 1)  // then number is negative
-	{   cout << "negative number " << endl;
+	cout << m_cs5463NumList[reg].name.c_str() << endl;
 
-	    bits.flip();  // flip
-		result = bits.to_ulong() + 1; // add one
-		result *= -1; // multiply by -1;
+	if(m_cs5463NumList[reg].notationType == m_numberNotation.TwosCN) {
 
-		cout << result << endl;
+       std::bitset<24> bits(m_cs5463NumList[reg].value);
+
+	   if(bits[23] == 1)  // checks for negative number
+	   {   cout << "Negative number " << endl;
+
+	      bits.flip();  // flip
+		  result = bits.to_ulong() + 1; // add one
+		  result *= -1; // multiply by -1;
+		  cout << result << endl;
+	   }
+
+	   normalized = ((double)(result)/(double)(8388607));
 	}
 	else
-		cout << result << endl;
+	{
+		normalized = ((double)(result)/(double)(16777215));
+
+	}
+
+	normalized = normalized*0.99999988;
+
+	normalized = pow((normalized*0.00048828),2);
 
 
+	m_cs5463NumList[reg].valueDec = sqrt(normalized); //todo .. make this constant more global
 
-	return 32;
+
+	cout << m_cs5463NumList[reg].valueDec << endl;
+	std::cout << std::setprecision(8) << std::scientific << normalized << endl;
+
 }
 
+/**
+ *  Makes 3 bytes into a 32 bit number;
+ *
+ */
 
+uint32_t cs5463spi::make32(uint8_t *var){
+
+	uint32_t num = (*(var+1)<<16) + (*(var+2)<<8) + *(var+3);
+
+	return num;
+
+}
 
 
 

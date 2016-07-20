@@ -15,6 +15,8 @@
 #include <vector>
 #include <string>
 #include <bitset>
+#include <iomanip>
+#include <iostream>
 #include "spi.h"
 using namespace std;
 
@@ -114,9 +116,9 @@ static const uint8_t PW_DWN_3 	= 0x98;  	// Reserved
 }cs5463Commands;
 
 /**
- * CS5463 local spi parameters.
+ * CS5463 spi parameters.
  */
-//TODO: maybe change to hex notation.
+//TODO: This is temporarely to set cs5463 .. but should be removed once all working well.
 typedef struct {
  static const uint8_t BIT_ORDER = 0;  		// send MSB first
  static const uint8_t MODE_0 	= 0; 		//mode 0, clock active high & data write on clock rising edge.
@@ -171,7 +173,7 @@ typedef struct{
  *  define a CS5463 Register: its address, the number notation type capable of holding, its default
  *  value in hex, its default value in decimal, the allowed range of values in decimal, the actual
  *  read decimal value and its human readable name. The "not-defined" number notation type is used
- *  to represent values within registers for configuration and controlling purposes.
+ *  to represent values within registers for configuration and controlling purposes only.
  */
 
 typedef struct {
@@ -181,7 +183,8 @@ typedef struct {
 	float		defaultValDec;	// default value in decimal
 	ValRange 	range;			// Permissible decimal range: defines a min and max numbers.
 	std::string name;           // The register name description
-	uint32_t 	value;			// actual read value in decimal: This value will be sent to database.
+	uint32_t 	value;			// actual read value.
+	double      valueDec;       // Normalised value;
 }CS5463Num;
 
 /**
@@ -317,8 +320,9 @@ private:
 	void setModeSpi(uint8_t wrMode, uint8_t rdMode);
 
 	uint32_t make32(uint8_t *var);
+    //float NumNotationConv(uint32_t num, int numNotation);
+    void NumNotationConv(int reg);
 
-	uint32_t ToDecimal(uint32_t num);
 	void InitPageZero();
 	void InitPageOne();
 	void InitPageThree();
@@ -345,19 +349,21 @@ private:
 	std::vector<std::string> 	m_statusWarn;
 	std::vector<CS5463Num> 		m_cs5463NumList;
 
+    //Status Register bit convention
 	enum {ic_not, fup, lsd, iod, vod,tod=6, tup,
 		vsag=10, ifault, eor, vror, iror, vor=16,
 		ior, crdy=20, drdy=23};
-
+    //cs5463 calibration types
 	enum {v_dc_offset_cal = 1, i_dc_offset_cal, iv_dc_offset_cal, v_ac_offset_cal, i_ac_offset_cal,
 	      v_dc_gain_cal, i_dc_gain_cal, v_ac_gain_cal, i_ac_gain_cal };
-
+    //cs5463 registers
 	enum{conf=0, i_dc_offset, i_gain, v_dc_offset, v_gain, cycle_count, pulse_rate, i_int, v_int,
 	     p_int, p_act, i_rms, v_rms, epsilon, p_offset, status, i_ac_offset, v_ac_offset, mode,
-	     temp, q_avg,q, i_peak, v_peak, q_trig, pf, mask, s, ctrl, p_h, p_f, q_f, pulse_width,
+	     temp, q_avg, q, i_peak, v_peak, q_trig, pf, mask, s, ctrl, p_h, p_f, q_f, pulse_width,
 	     load_min, temp_gain, temp_off,v_sag_duration, v_sag_level, i_sag_duration, i_sag_level};
 
 };
+
 
 extern "C" spi* create(){
 	return new cs5463spi;

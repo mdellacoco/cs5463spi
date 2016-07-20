@@ -7,6 +7,7 @@
 
 #ifndef SPI_H_
 #define SPI_H_
+
 #include <stdint.h>
 #include <unistd.h>
 #include <stddef.h>
@@ -23,7 +24,6 @@
 #include <ctime>
 #include <time.h>
 
-#include "SystemLog.h"
 #include "Logger.h"
 
 using namespace std;
@@ -72,20 +72,20 @@ public:
 	void setSpiSpeed(uint32_t spiSpeed){m_spiParams.spiSpeed = spiSpeed;}
 	void setSpiDelay(uint16_t spiDelay){m_spiParams.spiDelay = spiDelay;}
 	void setBitOrder(uint8_t bitOrder){m_spiParams.bitOrder = bitOrder;}
-	void setLog(SystemLog *pspiSysLog){m_mySPISysLog = pspiSysLog;}
+	//void setLog(SystemLog *pspiSysLog){m_mySPISysLog = pspiSysLog;}
 	void setLogger(Logger* myLogger){ m_pMyLogger = myLogger;}
 
 	//Logger* getLogger(){return m_pMyLogger;}
 
 	virtual void spiInit();
-	virtual void Exit(int exitType, const char *msg);
+	virtual void Exit(int exitType, const string& msg);
 
 
 protected:
     virtual void WriteRegister(){}
     virtual int ReadRegister(){return 0;}
     int spiSendReceive(uint8_t *pTxBuf, int iTxLen, uint8_t *pRxBuf, int iRxLen);
-    void spiInitBitOrder();
+    void spiInitBitOrderLSB();
     void setSpiWrMode(uint8_t spiWrMode){m_spiParams.spiWrMode = spiWrMode;}
     void setSpiRdMode(uint8_t spiRdMode){m_spiParams.spiRdMode = spiRdMode;}
     void setSpiMode(uint8_t spiMode){m_spiParams.spiRdMode = spiMode;}
@@ -106,7 +106,7 @@ protected:
     const spi& operator= (const spi&) = delete;
 
  protected:
-    SystemLog*    m_mySPISysLog;
+
     Logger*		  m_pMyLogger;
     std::string	  m_dateTime;
 

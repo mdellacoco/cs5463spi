@@ -16,9 +16,10 @@ Logger* Logger::instance = NULL;
 
 Logger::Logger() : active(false), pSocketHandler(NULL), pLoggerInfo(NULL){}
 
-Logger* Logger::Instance(const string& logFile,
-		                 ClientSocket* pSocketHandler,
-		                 loggerInfo* pMyLoggerInfo)
+//Logger* Logger::Instance(const string& logFile,
+		 //                ClientSocket* pSocketHandler,
+		       //          loggerInfo* pMyLoggerInfo)
+Logger* Logger::Instance()
 {
    if(!instance) {
 
@@ -26,8 +27,8 @@ Logger* Logger::Instance(const string& logFile,
       instance->active = true;
  //   instance.minPriority = minPriority;
       instance->minPriority = DEBUG;
-      instance->pSocketHandler = pSocketHandler;
-      instance->pLoggerInfo = pMyLoggerInfo;
+    //  instance->pSocketHandler = pSocketHandler;
+     // instance->pLoggerInfo = pMyLoggerInfo;
 	}
    // if (logFile != "")
     //{
@@ -38,8 +39,9 @@ Logger* Logger::Instance(const string& logFile,
 
 Logger::~Logger() {
 
-if(instance)
-	delete instance;
+   active = false;
+   if(instance)
+      delete instance;
 }
 
 
@@ -92,6 +94,23 @@ void Logger::WriteReadRemote(const string& message) {
 	    instance->pSocketHandler->writeAndRead(localStr, NULL);
 	    instance->pSocketHandler->closeSocket();
 	}
+}
+
+void Logger::Success(){
+
+	cout<<"Success.." <<endl;
+
+	instance->pSocketHandler->alive();
+
+}
+
+extern "C" Logger* createLog(){
+	return Logger::Instance();
+}
+
+extern "C" void destroyLog(Logger* p) {
+	Logger::StopInstance();
+	//delete p;
 }
 
 

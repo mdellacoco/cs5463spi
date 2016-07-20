@@ -39,13 +39,18 @@ public:
     // - messages with priority >= minPriority will be written in log
     // - set logFile = "" to write to standard output
     //static void Start(Priority minPriority, const string& logFile);
-    static Logger* Instance(const string& logFile,
-    		                ClientSocket* pSocketHandler,
-    		                loggerInfo* pMyLoggerInfo);
+    //static Logger* Instance(const string& logFile,
+    		             //   ClientSocket* pSocketHandler,
+    		              //  loggerInfo* pMyLoggerInfo);
 
+    static Logger* Instance();
     static void StopInstance();
-    ~Logger();
 
+    ~Logger();
+     void Success();
+
+     void SetSocketHandler(ClientSocket* pSocketHand){pSocketHandler = pSocketHand;}
+     void SetLoggerInfo(loggerInfo* pMyLoggerInfo){pLoggerInfo = pMyLoggerInfo;}
 
     // write message
     void WriteReadRemote(const string& message);
@@ -73,5 +78,10 @@ private:
     // the sole Logger instance (singleton)
     static Logger* instance;
 };
+
+// The type of the class factories
+typedef Logger* createLog_t();
+typedef void destroyLog_t(Logger*);
+
 
 #endif /* LOGGER_H_ */

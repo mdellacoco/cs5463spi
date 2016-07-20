@@ -10,8 +10,8 @@
 
 ClientSocket* ClientSocket::m_clientSocketInstance = NULL;
 
-ClientSocket::ClientSocket() : active(false){}
-
+ClientSocket::ClientSocket() : active(false), m_sfd(-1){}
+/*
 ClientSocket* ClientSocket::Instance(const string& servername, const string& portno) {
     if(!m_clientSocketInstance){
     	m_clientSocketInstance = new ClientSocket;
@@ -30,6 +30,22 @@ ClientSocket* ClientSocket::Instance(const string& servername, const string& por
 	//	return m_clientSocket;
 
 }
+}
+*/
+
+ClientSocket* ClientSocket::Instance() {
+
+	if(!m_clientSocketInstance){
+
+		m_clientSocketInstance = new ClientSocket;  //calling private constructor
+	    m_clientSocketInstance->active = true;
+
+	}
+
+	return m_clientSocketInstance;
+
+}
+
 
 ClientSocket::~ClientSocket() {
 	active = false;
@@ -85,6 +101,16 @@ void ClientSocket::writeAndRead(const string& message, string* msg_in) {
 void ClientSocket::closeSocket(){
      close(m_clientSocketInstance->m_sfd);
 }
+
+
+extern "C" ClientSocket* createSock(){
+	return ClientSocket::Instance();
+}
+
+extern "C" void destroySock(ClientSocket* p) {
+	delete p;
+}
+
 
 
 

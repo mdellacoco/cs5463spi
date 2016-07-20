@@ -17,6 +17,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <iostream>
 
 using namespace std;
 
@@ -40,9 +41,20 @@ public:
 	int createAndConnect();
 	void writeAndRead(const string& message, string* msg_in);
 	void closeSocket();
-	static ClientSocket* Instance(const string& servername, const string& portno);
+	void setServerName(const string& servername){m_servername = servername;}
+	void setPortNumber(const string& portno){m_service = portno;}
+	//static ClientSocket* Instance(const string& servername, const string& portno);
+	static ClientSocket* Instance();
+	static void StopInstance(){};
+
+	void alive(){cout<<"I am alive .."<<endl;}
 
 	~ClientSocket();
 };
+
+// The type of the class factories
+typedef ClientSocket* createSock_t();
+typedef void destroySock_t(ClientSocket*);
+
 
 #endif /* CLIENTSOCKET_H_ */
